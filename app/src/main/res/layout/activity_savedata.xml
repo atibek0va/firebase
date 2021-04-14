@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".savedata"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insert New data"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+<!--        <EditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="14sp"-->
+<!--            android:hint="User ID"-->
+<!--            android:inputType="text"-->
+<!--            android:id="@+id/etUserId"/>-->
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/etName"
+            android:hint="Name"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:id="@+id/etPhoneNO"
+            android:hint="Phone number"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:id="@+id/etAddress"
+            android:hint="Address"
+            android:inputType="text"/>
+
+        <Button
+            android:id="@+id/btnInsert"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:text="Insert"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/black"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
