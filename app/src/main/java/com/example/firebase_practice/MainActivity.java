@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,12 +16,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnlog, btnVerify, btnInsert;
     TextView txtVerify, name, email, password;
     FirebaseAuth auth;
+    DatabaseReference databaseReference;
+    String userCurrent;
+    userdata userm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         btnlog = findViewById(R.id.btnLogout);
-        btnVerify = findViewById(R.id.btnVerify);
+//        btnVerify = findViewById(R.id.btnVerify);
         btnInsert = findViewById(R.id.btnInsert);
 //        txtVerify = findViewById(R.id.txtVerify);
-//        name = findViewById(R.id.txtValue);
-//        email = findViewById(R.id.txtEmail);
-//        password = findViewById(R.id.txtPassword);
+        name = findViewById(R.id.txtName);
+        email = findViewById(R.id.txtEmail);
+        password = findViewById(R.id.txtPassword);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        user_info();
 //        Intent intent = getIntent();
 //
 //        String gName = intent.getStringExtra("Name");
@@ -48,29 +60,29 @@ public class MainActivity extends AppCompatActivity {
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent save = new Intent(MainActivity.this, savedata.class);
+                Intent save = new Intent(MainActivity.this, book_list.class);
                 startActivity(save);
             }
         });
 
-        if(!auth.getCurrentUser().isEmailVerified()){
-            btnVerify.setVisibility(View.VISIBLE);
-            txtVerify.setVisibility(View.VISIBLE);
-        }
+//        if(!auth.getCurrentUser().isEmailVerified()){
+//            btnVerify.setVisibility(View.VISIBLE);
+//            txtVerify.setVisibility(View.VISIBLE);
+//        }
 
-        btnVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this, "Verification sent" , Toast.LENGTH_SHORT).show();
-                        btnVerify.setVisibility(View.GONE);
-                        txtVerify.setVisibility(View.GONE);
-                    }
-                });
-            }
-        });
+//        btnVerify.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(MainActivity.this, "Verification sent" , Toast.LENGTH_SHORT).show();
+//                        btnVerify.setVisibility(View.GONE);
+//                        txtVerify.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
+//        });
 
         btnlog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,18 +94,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+        public void user_info(){
+            userCurrent = auth.getCurrentUser().getEmail().replace(".", "-");
+            Log.i("currentUser", userCurrent);
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.reset){
-            startActivity(new Intent(getApplicationContext(), reset.class));
+            getInfo(userCurrent);
         }
-        return super.onOptionsItemSelected(item);
+
+
+    private void getInfo(String userCurrent) {
+        databaseReference.child("data").child("realtimedata").child(userCurrent).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userm = snapshot.getValue(userdata.class);
+                name.setText(userm.getName());
+                email.setText(userm.getEmail());
+                password.setText(userm.getPassword());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

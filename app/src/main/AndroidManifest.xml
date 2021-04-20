@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Firebase_practice">
-        <activity android:name=".savedata"></activity>
-        <activity android:name=".reset" />
+        <activity android:name=".AddBook"></activity>
+        <activity android:name=".book_list" />
         <activity android:name=".register" />
         <activity android:name=".MainActivity" />
         <activity android:name=".login">

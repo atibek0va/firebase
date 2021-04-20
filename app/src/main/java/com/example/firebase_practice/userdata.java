@@ -1,22 +1,13 @@
 package com.example.firebase_practice;
 
 public class userdata {
-
-    String id, name, phone, address;
-
-    public userdata(String id, String name, String phone, String address) {
-        this.id = id;
+    String name, email, password;
+    public userdata(){}
+    
+    public userdata(String name, String email, String password) {
         this.name = name;
-        this.phone = phone;
-        this.address = address;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.email = email;
+        this.password = password;
     }
 
     public String getName() {
@@ -27,19 +18,19 @@ public class userdata {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

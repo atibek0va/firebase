@@ -53,6 +53,7 @@ public class login extends AppCompatActivity{
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Toast.makeText(login.this, "Welcome!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -61,8 +62,6 @@ public class login extends AppCompatActivity{
                         Toast.makeText(login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                Toast.makeText(login.this, "Welcome!", Toast.LENGTH_SHORT).show();
             }
         });
 
